@@ -1,28 +1,31 @@
-var socket = io();
-var pmsg;
-$('form').submit(function(){
-  socket.emit('chat message', $('#m').val());
-  $('#m').val('');
-  return false;
-});
-socket.on('chat message', function(msg){
-  $('#messages').append($('<li>').text(msg));
-});
+var socket = io.connect('http://localhost/chat');
 
-$('#join').click(join);
+$('#m').keypress(function(e) {
+    //e.preventDefault();
+    if(e.which == 13) {
+        socket.emit('chat message', $('#m').val());
+        $('#m').val('');
+        return false; 
+    }
+});
 
 function join () {
-  var $usr = $('#user');
-  var $jbtn = $('#join');
-  var usr = $usr.val();
-  if(!usr){return false;}
-  pmsg = io.connect('http://localhost/user.' + usr);
-  pmsg.on('connect', function () {
-    pmsg.emit('connected to private chat');
-  });
-  pmsg.on('private message', function(msg){
-    $('#p-messages').append($('<li>').text(msg));
-  });
-  $usr.hide();
-  $jbtn.hide();
+    console.log('firing join');
+    var $usr = $('#user');
+    var $jbtn = $('#join');
+    var usr = $usr.val();
+
+    if(!usr){ return false; }
+
+    socket.on('chat message', function(msg){
+        $('#messages').append($('<li>').text(msg));
+    });
+    
+    socket.on('private message', function(from, msg){
+
+        $('#p-messages').append($('<li>').text(from + ': ' + msg));
+    });
+
+    $usr.hide();
+    $jbtn.hide();
 }
