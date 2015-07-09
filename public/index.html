@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Socket.IO chat</title>
-    <link rel="stylesheet" type="text/css" href="stylesheets/index.css">
-  </head>
-  <body>
-    <div class="left">
-      <ul class="messages" id="messages"></ul>
-      <div class="container">
-        <input id="user" type="text" placeholder="Username" />
-        <button id="join" onclick="join()">Join</button>
-        <input id="m" autocomplete="off" />
-      </div>
-    </div>
-    <div class="right">
-      <ul class="messages" id="p-messages"></ul>
-    </div>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="javascripts/app.js"></script>
-  </body>
+    <head>
+        <title>Socket.IO chat</title>
+        <!-- <link rel="stylesheet" type="text/css" href="stylesheets/index.css"> -->
+        <link rel="stylesheet" type="text/css" href="vendor/sui/semantic.min.css">
+    </head>
+    <body>
+        <div class="left">
+            <div class="ui feed" id="messages"></div>
+        </div>
+        <div class="right">
+            <div class="ui feed" id="p-messages"></div>
+        </div>
+        <div class="container">
+            <input id="user" type="text" placeholder="Username" />
+            <button id="join" onclick="join()">Join</button>
+            <input id="m" autocomplete="off" />
+        </div>
+        <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script src="vendor/sui/semantic.min.js"></script>
+        <script src="javascripts/app.js"></script>
+    </body>
 </html>
