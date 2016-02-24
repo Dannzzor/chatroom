@@ -6,28 +6,6 @@ var io = require('socket.io')(server);
 
 app.use('/', express.static('public'));
 
-// var pmsg = io.of('/user.jon');
-// pmsg.on('connection', function(socket){
-//   socket.broadcast.emit('private message', 'a user connected');
-//   socket.on('disconnect', function(){
-//     console.log('a user has disconnected');
-//   });
-//   socket.on('private message', function(msg){
-//     pmsg.emit('private message', msg);
-//   });
-// });
-
-// var pmsg2 = io.of('/user.dan');
-// pmsg2.on('connection', function(socket){
-//   socket.broadcast.emit('private message', 'a user connected');
-//   socket.on('disconnect', function(){
-//     console.log('a user has disconnected');
-//   });
-//   socket.on('private message', function(msg){
-//     pmsg2.emit('private message', msg);
-//   });
-// });
-
 var chat = io
     .of('/chat')
     .on('connection', function(socket){
@@ -35,17 +13,17 @@ var chat = io
         socket.on('disconnect', function(){
             console.log('a user has disconnected');
         });
-        socket.on('chat message', function(msg){
+        socket.on('chat message', function(from, msg){
             if(msg.match('@')){
 
                 var usr = msg.match(/@.+?\s/g)[0];
-                var msg = msg.slice(usr.length);
+                msg = msg.slice(usr.length);
                 usr = usr.substr(1);
                 usr = usr.trim();
 
                 chat.emit('private message', usr, msg);
             } else {
-                chat.emit('chat message', msg);
+                chat.emit('chat message', from, msg);
             }
         });
     });
